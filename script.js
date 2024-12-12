@@ -11,71 +11,73 @@ const getComputerChoice = function () {
     }
 };
 
-const getHumanChoice = function () {
-    let choice = prompt('type your choice...')
-    return choice.toLocaleLowerCase()
-};
-
-
-
-const playGame = function () {
     let computerScore = 0;
-let humanScore = 0;
+    let humanScore = 0;
+    let comScore = document.querySelector('#com-score');
+    let humScore = document.querySelector('#hum-score');
+    let scores = document.querySelector('#scores');
 
-const playRound = function () {
-    let humanChoice = getHumanChoice();
-    let computerChoice = getComputerChoice();
+    const playRound = function (humanChoice) {
 
-    if (computerChoice === humanChoice) {
-        console.log('draw')
-        return;
+        let computerChoice = getComputerChoice();
+
+        if (computerChoice === humanChoice) {
+            console.log('draw')
+            return;
+        }
+
+        switch (humanChoice) {
+            case 'rock':
+                if (computerChoice === 'paper') {
+                    computerScore++
+                } else {
+                    humanScore++
+                }
+                break;
+            
+            case 'paper':
+                if (computerChoice === 'scissors') {
+                    computerScore++
+                } else {
+                    humanScore++
+                }
+                break;
+            
+            case 'scissors':
+                if (computerChoice === 'rock') {
+                    computerScore++
+                } else {
+                    humanScore++
+                }
+                break;
+            
+            default:
+                console.log('enter a valid choice')
+        }
+
+        comScore.textContent = computerScore;
+        humScore.textContent = humanScore;
+        
+        if (computerScore === 5) {
+            scores.textContent = 'computer wins'
+        }
+        
+        if (humanScore === 5) {
+            scores.innerHTML = 'human wins'
+        }
     }
 
-    switch (humanChoice) {
-        case 'rock':
-            if (computerChoice === 'paper') {
-                console.log('computer wins')
-                computerScore++
-            } else {
-                console.log('human wins')
-                humanScore++
-            }
-            break;
-        
-        case 'paper':
-            if (computerChoice === 'scissors') {
-                console.log('computer wins')
-                computerScore++
-            } else {
-                console.log('human wins')
-                humanScore++
-            }
-            break;
-        
-        case 'scissors':
-            if (computerChoice === 'rock') {
-                console.log('computer wins')
-                computerScore++
-            } else {
-                console.log('human wins')
-                humanScore++
-            }
-            break;
-        
-        default:
-            console.log('enter a valid choice')
-    }
-}
+const rockBTN = document.querySelector('#rock');
+const paperBTN = document.querySelector('#paper');
+const scissorsBTN = document.querySelector('#scissors');
 
-for (let i=0; i<5; i++) {
-    playRound()
-}
+rockBTN.addEventListener('click', () => {
+    playRound('rock')
+});
+paperBTN.addEventListener('click', () => {
+    playRound('paper')
+});
+scissorsBTN.addEventListener('click', () => {
+    playRound('scissors')
+});
 
-if (computerScore > humanScore) {
-    console.log('computer weens')
-} else {
-    console.log('human weens')
-}
-}
-
-playGame();
